@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -16,7 +16,7 @@ import {
   useColorScheme,
   View,
   Image,
-  TouchableHighlight
+  TouchableHighlight,
 } from 'react-native';
 
 import {
@@ -30,6 +30,7 @@ import {
 import Icon from 'react-native-vector-icons/AntDesign';
 
 import CryptoAlertLogo from './assets/crypto-alert-logo.png';
+import CryptoAlertLogoPun from './assets/crypto-alert-logo-pun.png';
 
 const Section = ({children, title}) => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -59,17 +60,25 @@ const Section = ({children, title}) => {
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
+  const [image, setImage] = useState(CryptoAlertLogo);
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
+
+  const switchLogo = () =>
+    setImage(image === CryptoAlertLogo ? CryptoAlertLogoPun : CryptoAlertLogo);
 
   return (
     <>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       <SafeAreaView style={{...backgroundStyle, ...styles.safeViewContainer}}>
         <View style={styles.header}>
-          <Image source={CryptoAlertLogo} style={styles.logo} />
+          <TouchableHighlight
+            onPress={switchLogo}
+            style={{...styles.flexCenter, width: '100%'}}>
+            <Image source={image} style={styles.logo} />
+          </TouchableHighlight>
         </View>
         <View style={styles.content}>
           <ScrollView
@@ -78,7 +87,7 @@ const App = () => {
             <View
               style={{
                 backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-                paddingBottom: 20
+                paddingBottom: 20,
               }}>
               <Section title="Step One">
                 Edit <Text style={styles.highlight}>App.js</Text> to change this
@@ -99,7 +108,12 @@ const App = () => {
         </View>
         <View style={styles.actionBar}>
           <TouchableHighlight style={styles.actionAddCoin}>
-            <Icon name="pluscircleo" size={50} color="#878f99" style={styles.addCoinIcon} />
+            <Icon
+              name="pluscircleo"
+              size={50}
+              color="#878f99"
+              style={styles.addCoinIcon}
+            />
           </TouchableHighlight>
         </View>
       </SafeAreaView>
@@ -140,9 +154,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
     borderRadius: 35,
     position: 'relative',
-    top: -20
+    top: -20,
   },
-  addCoinIcon: {
+  addCoinIcon: {},
+  flexCenter: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   sectionContainer: {
