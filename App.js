@@ -19,7 +19,6 @@ import {
   TouchableHighlight,
   TextInput,
 } from 'react-native';
-
 import {
   Colors,
   DebugInstructions,
@@ -27,8 +26,8 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-
 import Icon from 'react-native-vector-icons/AntDesign';
+import SearchBar from './components/SearchBar';
 
 import CryptoAlertLogo from './assets/crypto-alert-logo.png';
 import CryptoAlertLogoPun from './assets/crypto-alert-logo-pun.png';
@@ -87,7 +86,7 @@ const App = () => {
             style={backgroundStyle}>
             <View
               style={{
-                backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+                backgroundColor: 'black',
                 paddingBottom: 20,
               }}>
               <Section title="Step One">
@@ -108,15 +107,7 @@ const App = () => {
           </ScrollView>
         </View>
         <View style={styles.actionBar}>
-          <TouchableHighlight style={styles.actionAddCoin}>
-            <Icon
-              name="pluscircleo"
-              size={50}
-              color="#878f99"
-              style={styles.addCoinIcon}
-            />
-          </TouchableHighlight>
-          {/* <TextInput placeholder="banner" /> */}
+          <SearchBar />
         </View>
       </SafeAreaView>
     </>
@@ -140,25 +131,14 @@ const styles = StyleSheet.create({
     width: '50%',
   },
   content: {
-    flex: 9,
+    flex: 1,
   },
   actionBar: {
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'black',
-    flex: 1,
+    height: 60,
   },
-  actionAddCoin: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 65,
-    height: 65,
-    backgroundColor: 'black',
-    borderRadius: 35,
-    position: 'relative',
-    top: -20,
-  },
-  addCoinIcon: {},
   flexCenter: {
     justifyContent: 'center',
     alignItems: 'center',
