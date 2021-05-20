@@ -17,6 +17,7 @@ import {
   View,
   Image,
   TouchableHighlight,
+  TextInput,
 } from 'react-native';
 
 import {
@@ -115,6 +116,7 @@ const App = () => {
               style={styles.addCoinIcon}
             />
           </TouchableHighlight>
+          {/* <TextInput placeholder="banner" /> */}
         </View>
       </SafeAreaView>
     </>
@@ -131,20 +133,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'black',
-    flex: 1,
+    height: 60
   },
   logo: {
     resizeMode: 'center',
-    width: '60%',
+    width: '50%',
   },
   content: {
-    flex: 8,
+    flex: 9,
   },
   actionBar: {
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'black',
-    flex: 0.5,
+    flex: 1,
   },
   actionAddCoin: {
     justifyContent: 'center',
