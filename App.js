@@ -138,6 +138,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'black',
     height: 60,
+    padding: 10
   },
   flexCenter: {
     justifyContent: 'center',

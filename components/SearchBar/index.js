@@ -9,7 +9,7 @@ const SearchBar = () => {
   return (
     <View style={styles.container}>
       <View style={styles.searchField}>
-          {!searchText.length ? <Icon name="search1" size={20} color="#878f99" /> : null}
+          {!searchText.length ? <Icon name="search1" size={15} color="#878f99" /> : null}
       </View>
       <View style={styles.searchField}>
         <TextInput style={styles.searchInput} placeholder="Search coin" onChangeText={(text) => onSearchTextChange(text)} />
@@ -27,19 +27,19 @@ const styles = StyleSheet.create({
     width: '80%',
     borderRadius: 100,
     backgroundColor: '#1a1a1a',
-    shadowColor: '#fff',
-    shadowOffset: {
-        width: 0,
-        height: 1,
-    },
-    shadowOpacity: 0.20,
-    shadowRadius: 1.41,
+    // shadowColor: '#fff',
+    // shadowOffset: {
+    //     width: 0,
+    //     height: 1,
+    // },
+    // shadowOpacity: 0.20,
+    // shadowRadius: 1.41,
     
-    elevation: 2,
+    // elevation: 1,
   },
   searchField: {},
   searchInput: {
-    fontSize: 20,
+    fontSize: 15,
     textAlign: 'center'
   },
 });
