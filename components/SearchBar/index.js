@@ -1,19 +1,55 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, TextInput} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  TextInput,
+  TouchableHighlight,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 
-const SearchBar = () => {
-    const [searchText, setSearchText] = useState('');
-    const onSearchTextChange = (text) => {console.log(text);setSearchText(text);};
+const SearchBar = ({onSearch}) => {
+  const [searchText, setSearchText] = useState('');
+
+  const onSearchTextChange = text => {
+    onSearch(text);
+    setSearchText(text);
+  };
+
+  const onClear = () => {
+    onSearch('');
+    setSearchText('');
+  };
 
   return (
     <View style={styles.container}>
-      <View style={styles.searchField}>
-          {!searchText.length ? <Icon name="search1" size={15} color="#878f99" /> : null}
+      <View style={{...styles.searchField, flex: 1}}>
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Search coin"
+          onChangeText={onSearchTextChange}
+          value={searchText}
+        />
       </View>
-      <View style={styles.searchField}>
-        <TextInput style={styles.searchInput} placeholder="Search coin" onChangeText={(text) => onSearchTextChange(text)} />
-      </View>
+      {searchText.length ? (
+        <View style={styles.searchField}>
+          <TouchableHighlight onPress={onClear}>
+            <Icon
+              name="closecircleo"
+              size={15}
+              color="#878f99"
+              style={{marginRight: 15}}
+            />
+          </TouchableHighlight>
+        </View>
+      ) : (
+        <Icon
+          name="search1"
+          size={15}
+          color="#878f99"
+          style={{marginRight: 15}}
+        />
+      )}
     </View>
   );
 };
@@ -21,26 +57,18 @@ const SearchBar = () => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'white',
     width: '80%',
     borderRadius: 100,
     backgroundColor: '#1a1a1a',
-    // shadowColor: '#fff',
-    // shadowOffset: {
-    //     width: 0,
-    //     height: 1,
-    // },
-    // shadowOpacity: 0.20,
-    // shadowRadius: 1.41,
-    
-    // elevation: 1,
   },
   searchField: {},
   searchInput: {
     fontSize: 15,
-    textAlign: 'center'
+    textAlign: 'left',
+    color: 'white',
+    marginLeft: 15,
   },
 });
 

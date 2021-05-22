@@ -26,8 +26,8 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-import Icon from 'react-native-vector-icons/AntDesign';
 import SearchBar from './components/SearchBar';
+import SearchResult from './components/SearchResult';
 
 import CryptoAlertLogo from './assets/crypto-alert-logo.png';
 import CryptoAlertLogoPun from './assets/crypto-alert-logo-pun.png';
@@ -60,14 +60,17 @@ const Section = ({children, title}) => {
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
-  const [image, setImage] = useState(CryptoAlertLogo);
-
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+  const [image, setImage] = useState(CryptoAlertLogo);
+  const [searchText, setSearchText] = useState('');
+
   const switchLogo = () =>
     setImage(image === CryptoAlertLogo ? CryptoAlertLogoPun : CryptoAlertLogo);
+
+  const onSearch = text => setSearchText(text);
 
   return (
     <>
@@ -77,7 +80,8 @@ const App = () => {
           <TouchableHighlight
             onPress={switchLogo}
             style={{...styles.flexCenter, width: '100%'}}>
-            <Image source={image} style={styles.logo} />
+            {/* <Image source={image} style={styles.logo} /> */}
+            <Text>Header</Text>
           </TouchableHighlight>
         </View>
         <View style={styles.content}>
@@ -105,9 +109,12 @@ const App = () => {
               <LearnMoreLinks />
             </View>
           </ScrollView>
+          <View style={styles.searchResultContainer}>
+            <SearchResult searchText={searchText} />
+          </View>
         </View>
         <View style={styles.actionBar}>
-          <SearchBar />
+          <SearchBar onSearch={onSearch} />
         </View>
       </SafeAreaView>
     </>
@@ -124,7 +131,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'black',
-    height: 60
+    height: 60,
   },
   logo: {
     resizeMode: 'center',
@@ -138,11 +145,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'black',
     height: 60,
-    padding: 10
+    padding: 10,
   },
   flexCenter: {
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  searchResultContainer: {
+    position: 'absolute',
+    left: 0,
+    bottom: 0,
+    right: 0,
+    maxHeight: 250,
   },
 
   sectionContainer: {
