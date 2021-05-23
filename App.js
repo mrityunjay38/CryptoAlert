@@ -22,14 +22,12 @@ import {
 import {
   Colors,
   DebugInstructions,
-  Header,
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 import SearchBar from './components/SearchBar';
 import SearchResult from './components/SearchResult';
 
-import CryptoAlertLogo from './assets/crypto-alert-logo.png';
 import CryptoAlertLogoPun from './assets/crypto-alert-logo-pun.png';
 
 const Section = ({children, title}) => {
@@ -64,11 +62,7 @@ const App = () => {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
-  const [image, setImage] = useState(CryptoAlertLogo);
   const [searchText, setSearchText] = useState('');
-
-  const switchLogo = () =>
-    setImage(image === CryptoAlertLogo ? CryptoAlertLogoPun : CryptoAlertLogo);
 
   const onSearch = text => setSearchText(text);
 
@@ -77,12 +71,7 @@ const App = () => {
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       <SafeAreaView style={{...backgroundStyle, ...styles.safeViewContainer}}>
         <View style={styles.header}>
-          <TouchableHighlight
-            onPress={switchLogo}
-            style={{...styles.flexCenter, width: '100%'}}>
-            {/* <Image source={image} style={styles.logo} /> */}
-            <Text>Header</Text>
-          </TouchableHighlight>
+          <Image source={CryptoAlertLogoPun} style={styles.logo} />
         </View>
         <View style={styles.content}>
           <ScrollView
@@ -135,7 +124,7 @@ const styles = StyleSheet.create({
   },
   logo: {
     resizeMode: 'center',
-    width: '50%',
+    width: '60%',
   },
   content: {
     flex: 1,
