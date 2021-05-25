@@ -57,19 +57,32 @@ const Section = ({children, title}) => {
   );
 };
 
+const fetchCoins = () => {
+  return fetch('https://api.wazirx.com/api/v2/tickers')
+    .then(coinList => coinList.json())
+    .then(coinsTickers => {
+      return Object.keys(coinsTickers);
+    })
+    .catch(error => {
+      console.error(error);
+    });
+};
+
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
-  const [searchText, setSearchText] = useState('');
   const [showSplash, setShowSplash] = useState(true);
+  const [searchText, setSearchText] = useState('');
+  const [coinList, setCoinList] = useState([]);
   const onSearch = text => setSearchText(text);
 
   useEffect(() => {
-    setTimeout(() => {
+    fetchCoins().then(coins => {
+      setCoinList(coins);
       setShowSplash(false);
-    }, 3000);
+    });
   }, []);
 
   return (
@@ -110,7 +123,7 @@ const App = () => {
                 </View>
               </ScrollView>
               <View style={styles.searchResultContainer}>
-                <SearchResult searchText={searchText} />
+                <SearchResult coinList={coinList} searchText={searchText} />
               </View>
             </View>
             <View style={styles.actionBar}>
