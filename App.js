@@ -25,6 +25,7 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import SplashScreen from './components/SplashScreen';
 import SearchBar from './components/SearchBar';
 import SearchResult from './components/SearchResult';
 
@@ -61,51 +62,63 @@ const App = () => {
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
-
   const [searchText, setSearchText] = useState('');
-
+  const [showSplash, setShowSplash] = useState(true);
   const onSearch = text => setSearchText(text);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setShowSplash(false);
+    }, 3000);
+  }, []);
 
   return (
     <>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <SafeAreaView style={{...backgroundStyle, ...styles.safeViewContainer}}>
-        <View style={styles.header}>
-          <Image source={CryptoAlertLogoPun} style={styles.logo} />
-        </View>
-        <View style={styles.content}>
-          <ScrollView
-            contentInsetAdjustmentBehavior="automatic"
-            style={backgroundStyle}>
-            <View
-              style={{
-                backgroundColor: 'black',
-                paddingBottom: 20,
-              }}>
-              <Section title="Step One">
-                Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your edits.
-              </Section>
-              <Section title="See Your Changes">
-                <ReloadInstructions />
-              </Section>
-              <Section title="Debug">
-                <DebugInstructions />
-              </Section>
-              <Section title="Learn More">
-                Read the docs to discover what to do next:
-              </Section>
-              <LearnMoreLinks />
+      {showSplash ? (
+        <SplashScreen />
+      ) : (
+        <>
+          <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+          <SafeAreaView
+            style={{...backgroundStyle, ...styles.safeViewContainer}}>
+            <View style={styles.header}>
+              <Image source={CryptoAlertLogoPun} style={styles.logo} />
             </View>
-          </ScrollView>
-          <View style={styles.searchResultContainer}>
-            <SearchResult searchText={searchText} />
-          </View>
-        </View>
-        <View style={styles.actionBar}>
-          <SearchBar onSearch={onSearch} />
-        </View>
-      </SafeAreaView>
+            <View style={styles.content}>
+              <ScrollView
+                contentInsetAdjustmentBehavior="automatic"
+                style={backgroundStyle}>
+                <View
+                  style={{
+                    backgroundColor: 'black',
+                    paddingBottom: 20,
+                  }}>
+                  <Section title="Step One">
+                    Edit <Text style={styles.highlight}>App.js</Text> to change
+                    this screen and then come back to see your edits.
+                  </Section>
+                  <Section title="See Your Changes">
+                    <ReloadInstructions />
+                  </Section>
+                  <Section title="Debug">
+                    <DebugInstructions />
+                  </Section>
+                  <Section title="Learn More">
+                    Read the docs to discover what to do next:
+                  </Section>
+                  <LearnMoreLinks />
+                </View>
+              </ScrollView>
+              <View style={styles.searchResultContainer}>
+                <SearchResult searchText={searchText} />
+              </View>
+            </View>
+            <View style={styles.actionBar}>
+              <SearchBar onSearch={onSearch} />
+            </View>
+          </SafeAreaView>
+        </>
+      )}
     </>
   );
 };
@@ -124,7 +137,7 @@ const styles = StyleSheet.create({
   },
   logo: {
     resizeMode: 'center',
-    width: '60%',
+    width: '45%',
   },
   content: {
     flex: 1,
