@@ -46,7 +46,7 @@ const SearchResult = ({coinList, searchText}) => {
           <TouchableHighlight
             onPress={() => console.log('pressed')}
             key={coin}
-            style={{backgroundColor: 'rgba(222,145,220,0.1)'}}>
+            style={{backgroundColor: 'rgba(20,20,20,1)'}}>
             <View style={styles.coinNameContainer}>
               <Text style={styles.coin}>{coin}</Text>
               <Icon
