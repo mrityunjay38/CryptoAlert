@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import {
   StyleSheet,
   View,
@@ -13,7 +13,6 @@ const SearchBar = ({onSearch}) => {
 
   const onSearchTextChange = text => {
     onSearch(text);
-    setSearchText(text);
   };
 
   const onClear = () => {
@@ -21,13 +20,33 @@ const SearchBar = ({onSearch}) => {
     setSearchText('');
   };
 
+  const debounceSearch = (searchFn, timeout = 300) => {
+    let timer;
+    return (...text) => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        searchFn.apply(this, text);
+      }, timeout);
+    };
+  };
+
+  const optimalSearch = text => {
+    setSearchText(text);
+    delayedSearch(text);
+  };
+
+  const delayedSearch = useCallback(
+    debounceSearch(text => onSearchTextChange(text)),
+    [],
+  );
+
   return (
     <View style={styles.container}>
       <View style={{...styles.searchField, flex: 1}}>
         <TextInput
           style={styles.searchInput}
           placeholder="Search coin"
-          onChangeText={onSearchTextChange}
+          onChangeText={optimalSearch}
           value={searchText}
         />
       </View>

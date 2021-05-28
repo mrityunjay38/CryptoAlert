@@ -20,9 +20,10 @@ const SearchResult = ({coinList, searchText}) => {
 
   useEffect(() => {
     if (searchText) {
+      searchText = searchText.toLowerCase();
       const list = [];
       for (let x = 0; x < coinList.length; x++) {
-        if (coinList[x].includes(searchText)) {
+        if (coinList[x].indexOf(searchText) !== -1) {
           list.push(coinList[x]);
         }
       }
