@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {addCoin, getStorage} from '../../utils/localStorage';
 
 const SearchResult = ({coinList, searchText}) => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -17,6 +18,7 @@ const SearchResult = ({coinList, searchText}) => {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
   const [filteredCoins, setFilteredCoins] = useState([]);
+  const [usedCoins, setUsedCoins] = useState([]);
 
   useEffect(() => {
     if (searchText) {
@@ -33,6 +35,12 @@ const SearchResult = ({coinList, searchText}) => {
     }
   }, [searchText]);
 
+  useEffect(async () => {
+    const localStorage = await getStorage();
+    const coins = localStorage['coins'] || [];
+    setUsedCoins(coins.map(coin => coin.coinName) || []);
+  }, [usedCoins.length]);
+
   return (
     <ScrollView
       contentInsetAdjustmentBehavior="automatic"
@@ -42,22 +50,38 @@ const SearchResult = ({coinList, searchText}) => {
         borderTopRightRadius: 10,
       }}>
       <View>
-        {filteredCoins.map((coin, index) => (
-          <TouchableHighlight
-            onPress={() => console.log('pressed')}
-            key={coin}
-            style={{backgroundColor: 'rgba(20,20,20,1)'}}>
-            <View style={styles.coinNameContainer}>
-              <Text style={styles.coin}>{coin}</Text>
-              <Icon
-                name="arrow-left"
-                size={20}
-                color="#878f99"
-                style={{marginRight: 10, transform: [{rotate: '45deg'}]}}
-              />
-            </View>
-          </TouchableHighlight>
-        ))}
+        {filteredCoins.map((coin, index) => {
+          const disable = usedCoins.includes(coin);
+          return (
+            <TouchableHighlight
+              disabled={disable}
+              onPress={() => {
+                addCoin(coin);
+                setUsedCoins([...usedCoins, coin]);
+              }}
+              key={coin}
+              style={{backgroundColor: 'rgba(20,20,20,1)'}}>
+              <View style={styles.coinNameContainer}>
+                <Text style={styles.coin}>{coin}</Text>
+                {disable ? (
+                  <Icon
+                    name="check"
+                    size={20}
+                    color="#00c830"
+                    style={{marginRight: 10}}
+                  />
+                ) : (
+                  <Icon
+                    name="arrow-left"
+                    size={20}
+                    color="#878f99"
+                    style={{marginRight: 10, transform: [{rotate: '45deg'}]}}
+                  />
+                )}
+              </View>
+            </TouchableHighlight>
+          );
+        })}
       </View>
     </ScrollView>
   );
