@@ -39,7 +39,7 @@ const SearchResult = ({coinList, searchText}) => {
     const localStorage = await getStorage();
     const coins = localStorage['coins'] || [];
     setUsedCoins(coins.map(coin => coin.coinName) || []);
-  }, [usedCoins.length]);
+  }, []);
 
   return (
     <ScrollView
