@@ -12,7 +12,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 
 const CoinList = () => {
   const onDelete = () => {};
-  const coinList = [1];
+  const coinList = [1,2,3,4,5];
 
   return (
     <>
@@ -51,7 +51,7 @@ const CoinList = () => {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 5,
+    padding: 10,
   },
   coinWrapper: {
     backgroundColor: '#1a1a1a',
