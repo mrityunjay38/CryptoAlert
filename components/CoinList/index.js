@@ -1,50 +1,67 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   Text,
   View,
-  TouchableHighlight,
   StyleSheet,
   ScrollView,
+  TouchableOpacity,
 } from 'react-native';
+
+import EditCard from '../EditCard';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
 const CoinList = () => {
-  const onDelete = () => {};
-  const coinList = [1,2,3,4,5];
+  const [showModal, setShowModal] = useState(false);
+  const onSave = scheduleData => {
+    setShowModal(false);
+  };
+  const onDelete = () => {
+    console.log('delete');
+  };
+  const coinList = [1, 2, 3, 4, 5];
 
   return (
     <>
       {coinList.map((coin, index) => (
         <View style={styles.container} key={index}>
           <View style={styles.coinWrapper}>
-            <View style={styles.content}>
-              <View style={styles.headerWrapper}>
-                <View style={styles.header}>
-                  <Text style={styles.title}>XXXX</Text>
+            <TouchableOpacity
+              style={styles.content}
+              onPress={() => setShowModal(true)}>
+              <>
+                <View style={styles.headerWrapper}>
+                  <View style={styles.header}>
+                    <Text style={styles.title}>XXXX</Text>
+                  </View>
                 </View>
-              </View>
-              <ScrollView
-                horizontal={true}
-                showsHorizontalScrollIndicator={false}>
-                <View style={styles.metaInfo}>
-                  <Text style={styles.label}>Price: XX.XXXXXX</Text>
-                  <Text style={styles.divider}>|</Text>
-                  <Text style={styles.label}>Low: XX.XXXXXXXX</Text>
-                  <Text style={styles.divider}>|</Text>
-                  <Text style={styles.label}>High: XXX.XXXXX</Text>
-                </View>
-              </ScrollView>
-            </View>
-            <View style={styles.action}>
-              <TouchableHighlight onPress={onDelete}>
-                <Icon name="trash" size={15} color="#1579e3" />
-              </TouchableHighlight>
-            </View>
+                <ScrollView
+                  horizontal={true}
+                  showsHorizontalScrollIndicator={false}>
+                  <View style={styles.metaInfo}>
+                    <Text style={styles.label}>Price: XX.XXXXXX</Text>
+                    <Text style={styles.divider}>|</Text>
+                    <Text style={styles.label}>Low: XX.XXXXXXXX</Text>
+                    <Text style={styles.divider}>|</Text>
+                    <Text style={styles.label}>High: XXX.XXXXX</Text>
+                  </View>
+                </ScrollView>
+              </>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.action} onPress={onDelete}>
+              <Icon name="trash" size={15} color="#1579e3" />
+            </TouchableOpacity>
           </View>
         </View>
       ))}
+      {showModal && (
+        <EditCard
+          visible={showModal}
+          close={() => setShowModal(false)}
+          save={onSave}
+        />
+      )}
     </>
   );
 };
@@ -94,6 +111,9 @@ const styles = StyleSheet.create({
   divider: {
     color: '#878f99',
     marginHorizontal: 5,
+  },
+  flex: {
+    flex: 1,
   },
 });
 
